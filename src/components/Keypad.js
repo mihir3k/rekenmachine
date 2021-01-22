@@ -6,28 +6,28 @@ function Keypad() {
   return (
     <div className="Keypad">
       <div className="KeypadRow">
-        <Button buttonValue="7" />
-        <Button buttonValue="8" />
-        <Button buttonValue="9" />
-        <Button buttonValue="÷" />
+        <Button label="7" type="KEYPAD" />
+        <Button label="8" type="KEYPAD" />
+        <Button label="9" type="KEYPAD" />
+        <Button label="÷" type="KEYPAD" />
       </div>
       <div className="KeypadRow">
-        <Button buttonValue="4" />
-        <Button buttonValue="5" />
-        <Button buttonValue="6" />
-        <Button buttonValue="x" />
+        <Button label="4" type="KEYPAD" />
+        <Button label="5" type="KEYPAD" />
+        <Button label="6" type="KEYPAD" />
+        <Button label="x" type="KEYPAD" />
       </div>
       <div className="KeypadRow">
-        <Button buttonValue="1" />
-        <Button buttonValue="2" />
-        <Button buttonValue="3" />
-        <Button buttonValue="-" />
+        <Button label="1" type="KEYPAD" />
+        <Button label="2" type="KEYPAD" />
+        <Button label="3" type="KEYPAD" />
+        <Button label="-" type="KEYPAD" />
       </div>
       <div className="KeypadRow">
-        <Button buttonValue="AC" />
-        <Button buttonValue="0" />
-        <Button buttonValue="=" />
-        <Button buttonValue="+" />
+        <Button label="AC" type="KEYPAD" />
+        <Button label="0" type="KEYPAD" />
+        <Button label="=" type="KEYPAD" />
+        <Button label="+" type="KEYPAD" />
       </div>
     </div>
   );

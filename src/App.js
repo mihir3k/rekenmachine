@@ -1,13 +1,17 @@
 import "./App.css";
 
+import { RekenmachineProvider } from "./context";
+
 import Display from "./components/Display";
 import Keypad from "./components/Keypad";
 
 function App() {
   return (
     <div className="App">
-      <Display />
-      <Keypad />
+      <RekenmachineProvider>
+        <Display />
+        <Keypad />
+      </RekenmachineProvider>
     </div>
   );
 }
