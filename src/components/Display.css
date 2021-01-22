@@ -1,0 +1,9 @@
+.Display {
+  border: 1px solid gray;
+  padding: 20px;
+  text-align: right;
+}
+
+.Display .result {
+  font-size: 3rem;
+}

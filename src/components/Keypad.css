@@ -1,0 +1,9 @@
+.Keypad {
+  flex-grow: 1;
+}
+
+.KeypadRow {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
