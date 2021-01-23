@@ -17,11 +17,23 @@ function RekenmachineProvider({ children }) {
 }
 
 function useRekenmachineState() {
-  return useContext(RekenmachineStateContext);
+  const context = useContext(RekenmachineStateContext);
+  if (context === undefined) {
+    throw new Error(
+      "useRekenmachineState must be used with RekenmachineProvider"
+    );
+  }
+  return context;
 }
 
 function useRekenmachineDispatch() {
-  return useContext(RekenmachineDispatchContext);
+  const context = useContext(RekenmachineDispatchContext);
+  if (context === undefined) {
+    throw new Error(
+      "useRekenmachineDispatch must be used with RekenmachineProvider"
+    );
+  }
+  return context;
 }
 
 export { RekenmachineProvider, useRekenmachineState, useRekenmachineDispatch };
