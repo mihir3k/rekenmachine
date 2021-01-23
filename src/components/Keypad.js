@@ -38,9 +38,13 @@ function Keypad() {
       </div>
       <div className="KeypadRow" style={keyPadRowStyles}>
         <Button label="S" type="KEYPAD" />
-        {scientificMode ? <Button label="&plusmn;" type="KEYPAD" /> : null}
-        {scientificMode ? <Button label="x&sup2;" type="KEYPAD" /> : null}
-        {scientificMode ? <Button label="&radic;" type="KEYPAD" /> : null}
+        {scientificMode ? (
+          <>
+            <Button label="±" type="KEYPAD" />
+            <Button label="x²" type="KEYPAD" />
+            <Button label="√" type="KEYPAD" />
+          </>
+        ) : null}
       </div>
     </div>
   );
