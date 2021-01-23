@@ -85,7 +85,7 @@ function calculate(temp, total, operation, button) {
     if (total) {
       return {
         temp: temp,
-        total: (-1 * parseInt(temp)).toString(),
+        total: (-1 * parseInt(total)).toString(),
         operation: operation,
       };
     }
