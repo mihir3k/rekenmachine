@@ -19,6 +19,7 @@ function Button(props) {
           borderColor: themeName === "light" ? "#000000" : "#ffffff",
           backgroundColor: themeName === "light" ? "#f0f0f0" : "#666666",
           padding: "10px",
+          color: themeName === "light" ? "#000000" : "#ffffff",
           fontSize: props.small ? "1.5rem" : "3rem",
         }}
       >
