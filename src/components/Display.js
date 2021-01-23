@@ -2,7 +2,8 @@ import { useRekenmachineState } from "../context";
 
 function Display() {
   const { themeName } = useRekenmachineState();
-  const { nextValue, totalValue } = useRekenmachineState();
+  const { temp, total } = useRekenmachineState();
+
   return (
     <div
       className="Display"
@@ -15,7 +16,7 @@ function Display() {
       }}
     >
       <div className="result" style={{ fontSize: "3rem" }}>
-        {nextValue || totalValue || 0}
+        {temp || total || 0}
       </div>
     </div>
   );

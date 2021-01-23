@@ -1,11 +1,14 @@
+import { calculate } from "../utils/calculate";
+
 const initialState = {
   themeName: "light",
+  temp: null,
+  total: null,
+  operation: null,
   scientificMode: false,
 };
 
 function rekenmachineReducer(state = initialState, action) {
-  // @TODO remove console logs
-  console.log(action);
   switch (action.type) {
     case "LIGHT_THEME":
       return {
@@ -23,8 +26,20 @@ function rekenmachineReducer(state = initialState, action) {
           ...state,
           scientificMode: !state.scientificMode,
         };
+      } else {
+        const result = calculate(
+          state.temp,
+          state.total,
+          state.operation,
+          action.value
+        );
+        return {
+          ...state,
+          temp: result.temp,
+          total: result.total,
+          operation: result.operation,
+        };
       }
-      return state;
     default:
       return state;
   }
