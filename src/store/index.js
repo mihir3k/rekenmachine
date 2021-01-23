@@ -1,19 +1,30 @@
-import { calculate } from "../utils/calculate";
-
 const initialState = {
-  nextValue: 0,
-  totalValue: 0,
+  themeName: "light",
+  scientificMode: false,
 };
 
 function rekenmachineReducer(state = initialState, action) {
+  // @TODO remove console logs
+  console.log(action);
   switch (action.type) {
-    case "KEYPAD":
-      const values = calculate(state.nextValue, state.totalValue, action.value);
+    case "LIGHT_THEME":
       return {
         ...state,
-        nextValue: values.nextValue,
-        totalValue: values.totalValue,
+        themeName: "light",
       };
+    case "DARK_THEME":
+      return {
+        ...state,
+        themeName: "dark",
+      };
+    case "KEYPAD":
+      if (action.value === "S") {
+        return {
+          ...state,
+          scientificMode: !state.scientificMode,
+        };
+      }
+      return state;
     default:
       return state;
   }

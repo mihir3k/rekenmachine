@@ -1,12 +1,22 @@
-import "./Display.css";
-
 import { useRekenmachineState } from "../context";
 
 function Display() {
-  const { result } = useRekenmachineState();
+  const { themeName } = useRekenmachineState();
+  const { nextValue, totalValue } = useRekenmachineState();
   return (
-    <div className="Display">
-      <div className="result">0</div>
+    <div
+      className="Display"
+      style={{
+        borderWidth: "1px",
+        borderStyle: "solid",
+        borderColor: themeName === "light" ? "#000000" : "#ffffff",
+        padding: "20px",
+        textAlign: "right",
+      }}
+    >
+      <div className="result" style={{ fontSize: "3rem" }}>
+        {nextValue || totalValue || 0}
+      </div>
     </div>
   );
 }
