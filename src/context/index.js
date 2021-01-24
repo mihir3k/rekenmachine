@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
 
-import { initialState, rekenmachineReducer } from "../store";
+import { initialState, rekenmachineReducer } from "../reducer";
 
 const RekenmachineStateContext = createContext(null);
 const RekenmachineDispatchContext = createContext(null);
