@@ -76,7 +76,7 @@ function getCalculationResult(currentInputArray, currentResult, newValue) {
   let newResult = newInputArray.length ? parseInt(newInputArray[0]) : 0;
 
   if (newInputArray.length === 3) {
-    newResult = newInputArray.slice(-1);
+    newResult = parseInt(newInputArray[newInputArray.length - 1]);
   }
 
   if (isScientificOperator(newValue)) {
@@ -87,8 +87,8 @@ function getCalculationResult(currentInputArray, currentResult, newValue) {
       newInputArray.push(newResult.toString());
     } else {
       return {
-        newInputArray,
-        newResult,
+        newInputArray: currentInputArray,
+        newResult: currentResult,
         hasError: true,
         errorMessage: "Cannot perform scientific operation",
       };
