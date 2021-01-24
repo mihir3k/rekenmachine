@@ -34,6 +34,39 @@ function operate(a, b, op) {
   }
 }
 
+function updateInputArray(inputArray, newValue) {
+  inputArray = [...inputArray];
+
+  // If newValue is neither an operator or a number, do nothing
+  if (!isNumber(newValue) && !isOperator(newValue)) {
+    return inputArray;
+  }
+
+  // If inputArray is empty and newValue is an operator, do nothing
+  if (!inputArray.length && isOperator(newValue)) {
+    return inputArray;
+  }
+
+  // Get last value in inputArray
+  let lastValue = inputArray[inputArray.length - 1];
+
+  // If last value in inputArray is an operator and newValue is also an operator,
+  // replace last value in inputArray with newValue
+  if (isOperator(lastValue) && isOperator(newValue)) {
+    inputArray[inputArray.length - 1] = newValue;
+    return inputArray;
+  }
+
+  // If last value in inputArray is a number and newValue is also a number
+  // append newValue to last value in inputArray
+  if (isNumber(lastValue) && isNumber(newValue)) {
+    inputArray[inputArray.length - 1] = lastValue + newValue;
+    return inputArray;
+  }
+
+  return [...inputArray, newValue];
+}
+
 function getCalculationResult(currentInputArray, currentResult, newValue) {
   let hasError = false;
   let errorMessage = "";
@@ -80,45 +113,21 @@ function getCalculationResult(currentInputArray, currentResult, newValue) {
     };
   }
 
+  if (newResult.toString().length > 10) {
+    return {
+      newInputArray: currentInputArray,
+      newResult: currentResult,
+      hasError: true,
+      errorMessage: "Exceeded calculator range",
+    };
+  }
+
   return {
     newInputArray,
     newResult,
     hasError,
     errorMessage,
   };
-}
-
-function updateInputArray(inputArray, newValue) {
-  inputArray = [...inputArray];
-
-  // If newValue is neither an operator or a number, do nothing
-  if (!isNumber(newValue) && !isOperator(newValue)) {
-    return inputArray;
-  }
-
-  // If inputArray is empty and newValue is an operator, do nothing
-  if (!inputArray.length && isOperator(newValue)) {
-    return inputArray;
-  }
-
-  // Get last value in inputArray
-  let lastValue = inputArray[inputArray.length - 1];
-
-  // If last value in inputArray is an operator and newValue is also an operator,
-  // replace last value in inputArray with newValue
-  if (isOperator(lastValue) && isOperator(newValue)) {
-    inputArray[inputArray.length - 1] = newValue;
-    return inputArray;
-  }
-
-  // If last value in inputArray is a number and newValue is also a number
-  // append newValue to last value in inputArray
-  if (isNumber(lastValue) && isNumber(newValue)) {
-    inputArray[inputArray.length - 1] = lastValue + newValue;
-    return inputArray;
-  }
-
-  return [...inputArray, newValue];
 }
 
 export { getCalculationResult };

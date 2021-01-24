@@ -1,4 +1,4 @@
-import { getCalculationResult } from "../utils/calculate";
+import { getCalculationResult } from "../utils";
 
 const initialState = {
   themeName: "light",
@@ -42,7 +42,6 @@ function rekenmachineReducer(state = initialState, action) {
           hasError,
           errorMessage,
         } = getCalculationResult(state.inputArray, state.result, action.value);
-        console.log(newInputArray, "\n", newResult, "\n", typeof newResult);
         return {
           ...state,
           inputArray: newInputArray,
