@@ -1,39 +1,85 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import App from "../components/App";
 import { RekenmachineProvider } from "../context";
 
-describe("should render", function () {
-  it("title", () => {
-    render(
-      <RekenmachineProvider>
-        <App />
-      </RekenmachineProvider>
-    );
+function renderApp() {
+  render(
+    <RekenmachineProvider>
+      <App />
+    </RekenmachineProvider>
+  );
+}
 
-    expect(screen.getByText(/rekenmachine/i)).toBeInTheDocument();
-  });
-});
+function triggerClick(buttons) {
+  for (let button of buttons) {
+    userEvent.click(screen.getByTestId(`button${button}`));
+  }
+}
 
 function test(buttons, expectedValue) {
   it(`${buttons.join(" ")} -> ${expectedValue}`, () => {
-    render(
-      <RekenmachineProvider>
-        <App />
-      </RekenmachineProvider>
-    );
+    renderApp();
 
-    for (let button of buttons) {
-      userEvent.click(screen.getByTestId(`button${button}`));
-    }
+    triggerClick(buttons);
     expect(screen.getByTestId("display-result")).toHaveTextContent(
       expectedValue
     );
   });
 }
 
-describe("should calculate", function () {
+describe("should render", () => {
+  it("title", () => {
+    renderApp();
+    expect(screen.getByText(/rekenmachine/i)).toBeInTheDocument();
+  });
+
+  it("light theme button", () => {
+    renderApp();
+    expect(screen.getByTestId("buttonLight Theme")).toBeInTheDocument();
+  });
+
+  it("dark theme button", () => {
+    renderApp();
+    expect(screen.getByTestId("buttonDark Theme")).toBeInTheDocument();
+  });
+});
+
+describe("should toggle", () => {
+  it("between light and dark theme", async () => {
+    renderApp();
+    userEvent.click(screen.getByTestId("buttonDark Theme"));
+    await waitFor(() => {
+      expect(screen.queryByTestId("button1")).toHaveStyle({
+        borderColor: "#ffffff",
+      });
+    });
+
+    userEvent.click(screen.getByTestId("buttonLight Theme"));
+    await waitFor(() => {
+      expect(screen.queryByTestId("button1")).toHaveStyle({
+        borderColor: "#000000",
+      });
+    });
+  });
+
+  it("scientific mode", async () => {
+    renderApp();
+
+    userEvent.click(screen.getByTestId("buttonS"));
+    await waitFor(() => {
+      expect(screen.queryByText("x²")).toBeInTheDocument();
+    });
+
+    userEvent.click(screen.getByTestId("buttonS"));
+    await waitFor(() => {
+      expect(screen.queryByText("x²")).not.toBeInTheDocument();
+    });
+  });
+});
+
+describe("should calculate", () => {
   test([], "0");
 
   test(["2"], "2");
@@ -63,6 +109,8 @@ describe("should calculate", function () {
   test(["2", "+", "3", "-", "1", "x", "1", "0", "=", "AC"], "0");
 
   test(["S", "2", "±", "+", "3", "="], "1");
+
+  test(["S", "2", "+", "3", "±", "="], "1");
 
   test(["S", "2", "±", "x", "3", "="], "-6");
 
