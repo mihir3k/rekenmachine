@@ -1,166 +1,124 @@
+// isNumber returns true if value is a Number
 function isNumber(value) {
   return Object.is(parseInt(value), NaN) ? false : true;
+}
+
+// isOperator returns true if value is an operator
+function isOperator(value) {
+  return ["+", "-", "x", "÷", "=", "±", "x²", "√"].includes(value);
+}
+
+// isScientificOperator returns true if value is a scientific operator
+function isScientificOperator(value) {
+  return ["±", "x²", "√"].includes(value);
 }
 
 function operate(a, b, op) {
   switch (op) {
     case "+":
-      return (a + b).toString();
+      return a + b;
     case "-":
-      return (a - b).toString();
+      return a - b;
     case "x":
-      return (a * b).toString();
+      return a * b;
     case "÷":
-      return b === 0 ? 0 : (a / b).toString();
+      return b === 0 ? 0 : a / b;
+    case "±":
+      return -a;
+    case "x²":
+      return Math.pow(a, 2);
+    case "√":
+      return Math.floor(Math.sqrt(a));
     default:
-      console.log("UKNOWN OPERATION");
-      break;
+      return a;
   }
 }
 
-function calculate(temp, total, operation, button) {
-  if (button === "AC") {
-    return {
-      temp: null,
-      total: null,
-      operation: null,
-    };
+function getCalculationResult(currentInputArray, currentResult, newValue) {
+  let hasError = false;
+  let errorMessage = "";
+
+  let newInputArray = updateInputArray(currentInputArray, newValue);
+
+  let newResult = newInputArray.length ? parseInt(newInputArray[0]) : 0;
+
+  if (newInputArray.length === 3) {
+    newResult = newInputArray.slice(-1);
   }
 
-  if (isNumber(button)) {
-    if (button === "0" && temp === "0") {
-      return {
-        temp: temp,
-        total: total,
-        operation: operation,
-      };
-    }
-
-    if (operation) {
-      if (temp) {
-        return {
-          temp: temp + button,
-          total: total,
-          operation: operation,
-        };
-      }
-      return { temp: button, total: total, operation: operation };
-    }
-
-    if (temp) {
-      const newTemp = temp === "0" ? button : temp + button;
-      return {
-        temp: newTemp,
-        total: null,
-        operation: operation,
-      };
-    }
-    return {
-      temp: button,
-      total: null,
-      operation: operation,
-    };
-  }
-
-  if (button === "=") {
-    if (temp && operation) {
-      return {
-        total: operate(parseInt(total), parseInt(temp), operation),
-        temp: null,
-        operation: null,
-      };
+  if (isScientificOperator(newValue)) {
+    if (newInputArray.length === 2) {
+      let operator = newInputArray.pop();
+      let operand = newInputArray.pop();
+      newResult = operate(operand, 0, operator).toString();
+      newInputArray.push(newResult.toString());
     } else {
-      return { temp: temp, total: total, operation: operation };
+      return {
+        newInputArray,
+        newResult,
+        hasError: true,
+        errorMessage: "Cannot perform scientific operation",
+      };
     }
   }
 
-  if (button === "±") {
-    if (temp) {
-      return {
-        temp: (-1 * parseInt(temp)).toString(),
-        total: total,
-        operation: operation,
-      };
-    }
-    if (total) {
-      return {
-        temp: temp,
-        total: (-1 * parseInt(total)).toString(),
-        operation: operation,
-      };
-    }
-    return {
-      temp: temp,
-      total: total,
-      operation: operation,
-    };
-  }
+  if (newInputArray.length > 3) {
+    const extraOperator = newInputArray.pop();
+    const secondOperand = parseInt(newInputArray.pop());
+    const operator = newInputArray.pop();
+    const firstOperand = parseInt(newInputArray.pop());
 
-  if (button === "x²") {
-    if (temp) {
-      return {
-        temp: Math.pow(parseInt(temp), 2).toString(),
-        total: total,
-        operation: operation,
-      };
-    }
-    if (total) {
-      return {
-        temp: temp,
-        total: Math.pow(parseInt(total), 2).toString(),
-        operation: operation,
-      };
-    }
-    return {
-      temp: temp,
-      total: total,
-      operation: operation,
-    };
-  }
+    newResult = operate(firstOperand, secondOperand, operator).toString();
 
-  if (button === "√") {
-    if (temp) {
-      return {
-        temp: Math.sqrt(parseInt(temp)).toString(),
-        total: total,
-        operation: operation,
-      };
-    }
-    if (total) {
-      return {
-        temp: temp,
-        total: Math.sqrt(parseInt(total)).toString(),
-        operation: operation,
-      };
-    }
+    newInputArray[0] = newResult;
+    newInputArray[1] = extraOperator;
     return {
-      temp: temp,
-      total: total,
-      operation: operation,
-    };
-  }
-
-  if (operation) {
-    return {
-      total: operate(parseInt(total), parseInt(temp), operation),
-      next: null,
-      operation: button,
-    };
-  }
-
-  if (!temp) {
-    return {
-      temp: temp,
-      total: total,
-      operation: button,
+      newInputArray: newInputArray,
+      newResult: newResult,
+      hasError,
+      errorMessage,
     };
   }
 
   return {
-    temp: null,
-    total: temp,
-    operation: button,
+    newInputArray,
+    newResult,
+    hasError,
+    errorMessage,
   };
 }
 
-export { calculate };
+function updateInputArray(inputArray, newValue) {
+  inputArray = [...inputArray];
+
+  // If newValue is neither an operator or a number, do nothing
+  if (!isNumber(newValue) && !isOperator(newValue)) {
+    return inputArray;
+  }
+
+  // If inputArray is empty and newValue is an operator, do nothing
+  if (!inputArray.length && isOperator(newValue)) {
+    return inputArray;
+  }
+
+  // Get last value in inputArray
+  let lastValue = inputArray[inputArray.length - 1];
+
+  // If last value in inputArray is an operator and newValue is also an operator,
+  // replace last value in inputArray with newValue
+  if (isOperator(lastValue) && isOperator(newValue)) {
+    inputArray[inputArray.length - 1] = newValue;
+    return inputArray;
+  }
+
+  // If last value in inputArray is a number and newValue is also a number
+  // append newValue to last value in inputArray
+  if (isNumber(lastValue) && isNumber(newValue)) {
+    inputArray[inputArray.length - 1] = lastValue + newValue;
+    return inputArray;
+  }
+
+  return [...inputArray, newValue];
+}
+
+export { getCalculationResult };

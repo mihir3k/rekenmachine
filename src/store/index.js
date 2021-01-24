@@ -1,10 +1,11 @@
-import { calculate } from "../utils/calculate";
+import { getCalculationResult } from "../utils/calculate";
 
 const initialState = {
   themeName: "light",
-  temp: null,
-  total: null,
-  operation: null,
+  inputArray: [],
+  result: 0,
+  hasError: false,
+  errorMessage: "",
   scientificMode: false,
 };
 
@@ -26,18 +27,28 @@ function rekenmachineReducer(state = initialState, action) {
           ...state,
           scientificMode: !state.scientificMode,
         };
-      } else {
-        const result = calculate(
-          state.temp,
-          state.total,
-          state.operation,
-          action.value
-        );
+      } else if (action.value === "AC") {
         return {
           ...state,
-          temp: result.temp,
-          total: result.total,
-          operation: result.operation,
+          result: 0,
+          inputArray: [],
+          hasError: false,
+          errorMessage: "",
+        };
+      } else {
+        let {
+          newInputArray,
+          newResult,
+          hasError,
+          errorMessage,
+        } = getCalculationResult(state.inputArray, state.result, action.value);
+        console.log(newInputArray, "\n", newResult, "\n", typeof newResult);
+        return {
+          ...state,
+          inputArray: newInputArray,
+          result: newResult,
+          hasError: hasError,
+          errorMessage: errorMessage,
         };
       }
     default:

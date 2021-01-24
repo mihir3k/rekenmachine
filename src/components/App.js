@@ -5,6 +5,7 @@ import { useRekenmachineState } from "../context";
 import Display from "./Display";
 import Keypad from "./Keypad";
 import Button from "./Button";
+import Error from "./Error";
 
 function App() {
   const { themeName } = useRekenmachineState();
@@ -16,13 +17,32 @@ function App() {
   });
 
   return (
-    <div className="App" style={{ maxWidth: "400px", margin: "0 auto" }}>
+    <div
+      className="App"
+      style={{
+        maxWidth: "400px",
+        margin: "0 auto",
+        fontFamily: "monospace",
+      }}
+    >
+      <div
+        className="title"
+        style={{
+          padding: "20px",
+          fontWeight: "bold",
+          fontSize: "2rem",
+          textAlign: "center",
+        }}
+      >
+        Rekenmachine
+      </div>
       <div className="ThemeSwitcher" style={{ display: "flex" }}>
         <Button label="Light Theme" type="LIGHT_THEME" small wide />
         <Button label="Dark Theme" type="DARK_THEME" small wide />
       </div>
       <Display />
       <Keypad />
+      <Error />
     </div>
   );
 }

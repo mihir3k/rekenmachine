@@ -2,7 +2,7 @@ import { useRekenmachineState } from "../context";
 
 function Display() {
   const { themeName } = useRekenmachineState();
-  const { temp, total } = useRekenmachineState();
+  const { result } = useRekenmachineState();
 
   return (
     <div
@@ -11,12 +11,18 @@ function Display() {
         borderWidth: "1px",
         borderStyle: "solid",
         borderColor: themeName === "light" ? "#000000" : "#ffffff",
-        padding: "20px",
-        textAlign: "right",
       }}
     >
-      <div className="result" style={{ fontSize: "3rem" }}>
-        {temp || total || 0}
+      <div
+        className="result"
+        style={{
+          padding: "10px",
+          textAlign: "right",
+          fontWeight: "400",
+          fontSize: "4rem",
+        }}
+      >
+        {result}
       </div>
     </div>
   );

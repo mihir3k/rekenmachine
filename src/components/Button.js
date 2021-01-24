@@ -16,11 +16,12 @@ function Button(props) {
           width: "100%",
           borderWidth: "1px",
           borderStyle: "solid",
+          padding: "10px",
+          fontFamily: "monospace",
+          fontSize: props.small ? "1.2rem" : "3rem",
           borderColor: themeName === "light" ? "#000000" : "#ffffff",
           backgroundColor: themeName === "light" ? "#f0f0f0" : "#666666",
-          padding: "10px",
           color: themeName === "light" ? "#000000" : "#ffffff",
-          fontSize: props.small ? "1.5rem" : "3rem",
         }}
       >
         {props.label}
