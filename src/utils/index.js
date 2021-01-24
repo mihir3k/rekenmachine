@@ -80,7 +80,7 @@ function getCalculationResult(currentInputArray, currentResult, newValue) {
   }
 
   if (isScientificOperator(newValue)) {
-    if (newInputArray.length === 2) {
+    if (newInputArray.length === 2 || newValue === "±") {
       let operator = newInputArray.pop();
       let operand = newInputArray.pop();
       newResult = operate(operand, 0, operator).toString();
