@@ -7,7 +7,8 @@ A simple calculator built with React. :link: [https://rekenmachine.vercel.app](h
 Clone this repository and change into the cloned repository's directory:
 
 ```sh
-$ git clone https://github.com/mihir3k/rekenmachine && cd smmry
+$ git clone https://github.com/mihir3k/rekenmachine
+$ cd rekenmachine
 ```
 
 Install dependencies:
