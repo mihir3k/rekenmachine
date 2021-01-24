@@ -14,13 +14,13 @@ function Display() {
       }}
     >
       <div
-        className="result"
         style={{
           padding: "10px",
           textAlign: "right",
           fontWeight: "400",
           fontSize: "4rem",
         }}
+        data-testid="display-result"
       >
         {result}
       </div>

@@ -23,6 +23,7 @@ function Button(props) {
           borderColor: themeName === "light" ? "#000000" : "#ffffff",
           color: themeName === "light" ? "#000000" : "#ffffff",
         }}
+        data-testid={`button${props.label}`}
       >
         {props.label}
       </button>
