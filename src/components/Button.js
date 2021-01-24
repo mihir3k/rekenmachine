@@ -19,8 +19,8 @@ function Button(props) {
           padding: "10px",
           fontFamily: "monospace",
           fontSize: props.small ? "1.2rem" : "3rem",
-          borderColor: themeName === "light" ? "#000000" : "#ffffff",
           backgroundColor: themeName === "light" ? "#f0f0f0" : "#666666",
+          borderColor: themeName === "light" ? "#000000" : "#ffffff",
           color: themeName === "light" ? "#000000" : "#ffffff",
         }}
       >

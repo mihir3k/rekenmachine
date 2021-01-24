@@ -2,10 +2,8 @@ import { useEffect } from "react";
 
 import { useRekenmachineState } from "../context";
 
-import Display from "./Display";
-import Keypad from "./Keypad";
-import Button from "./Button";
-import Error from "./Error";
+import ThemeSwitcher from "./ThemeSwitcher";
+import Calculator from "./Calculator";
 
 function App() {
   const { themeName } = useRekenmachineState();
@@ -26,23 +24,21 @@ function App() {
       }}
     >
       <div
-        className="title"
+        className="Title"
         style={{
+          display: "flex",
+          justifyContent: "center",
           padding: "20px",
-          fontWeight: "bold",
-          fontSize: "2rem",
-          textAlign: "center",
         }}
       >
-        Rekenmachine
+        <div
+          style={{ fontWeight: "bold", fontSize: "2rem", textAlign: "center" }}
+        >
+          Rekenmachine
+        </div>
       </div>
-      <div className="ThemeSwitcher" style={{ display: "flex" }}>
-        <Button label="Light Theme" type="LIGHT_THEME" small wide />
-        <Button label="Dark Theme" type="DARK_THEME" small wide />
-      </div>
-      <Display />
-      <Keypad />
-      <Error />
+      <ThemeSwitcher />
+      <Calculator />
     </div>
   );
 }
